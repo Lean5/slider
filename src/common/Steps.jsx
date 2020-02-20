@@ -1,13 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import warning from 'warning';
 
 const calcPoints = (vertical, marks, dots, step, min, max) => {
-  warning(
-    dots ? step > 0 : true,
-    '`Slider[step]` should be a positive number in order to make Slider[dots] work.'
-  );
   const points = Object.keys(marks).map(parseFloat).sort((a, b) => a - b);
   if (dots && step) {
     for (let i = min; i <= max; i += step) {
@@ -43,22 +37,6 @@ const Steps = ({ prefixCls, vertical, reverse, marks, dots, step, included,
   });
 
   return <div className={`${prefixCls}-step`}>{elements}</div>;
-};
-
-Steps.propTypes = {
-  prefixCls: PropTypes.string,
-  activeDotStyle: PropTypes.object,
-  dotStyle: PropTypes.object,
-  min: PropTypes.number,
-  max: PropTypes.number,
-  upperBound: PropTypes.number,
-  lowerBound: PropTypes.number,
-  included: PropTypes.bool,
-  dots: PropTypes.bool,
-  step: PropTypes.number,
-  marks: PropTypes.object,
-  vertical: PropTypes.bool,
-  reverse: PropTypes.bool,
 };
 
 export default Steps;

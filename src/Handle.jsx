@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import addEventListener from 'rc-util/lib/Dom/addEventListener';
 
 export default class Handle extends React.Component {
   state = {
@@ -11,13 +9,11 @@ export default class Handle extends React.Component {
   componentDidMount() {
     // mouseup won't trigger if mouse moved out of handle,
     // so we listen on document here.
-    this.onMouseUpListener = addEventListener(document, 'mouseup', this.handleMouseUp);
+    document.addEventListener('mouseup', this.handleMouseUp, false);
   }
 
   componentWillUnmount() {
-    if (this.onMouseUpListener) {
-      this.onMouseUpListener.remove();
-    }
+    document.removeEventListener('mouseup', this.handleMouseUp, false);
   }
 
   setHandleRef = (node) => {
@@ -132,20 +128,3 @@ export default class Handle extends React.Component {
     );
   }
 }
-
-Handle.propTypes = {
-  prefixCls: PropTypes.string,
-  className: PropTypes.string,
-  vertical: PropTypes.bool,
-  offset: PropTypes.number,
-  style: PropTypes.object,
-  disabled: PropTypes.bool,
-  min: PropTypes.number,
-  max: PropTypes.number,
-  value: PropTypes.number,
-  tabIndex: PropTypes.number,
-  reverse: PropTypes.bool,
-  ariaLabel: PropTypes.string,
-  ariaLabelledBy: PropTypes.string,
-  ariaValueTextFormatter: PropTypes.func,
-};

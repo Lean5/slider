@@ -1,5 +1,4 @@
 import { findDOMNode } from 'react-dom';
-import keyCode from 'rc-util/lib/KeyCode';
 
 export function isEventFromHandle(e, handles) {
   try {
@@ -99,20 +98,20 @@ export function getKeyboardValueMutator(e, vertical, reverse) {
   const increase = 'increase';
   const decrease = 'decrease';
   let  method = increase;
-  switch (e.keyCode) {
-    case keyCode.UP:
+  switch (e.code) {
+    case 'ArrowUp':
       method = vertical && reverse ? decrease: increase; break;
-    case keyCode.RIGHT:
+    case 'ArrowRight':
       method = !vertical && reverse ? decrease: increase; break;
-    case keyCode.DOWN:
+    case 'ArrowDown':
       method = vertical && reverse ? increase: decrease; break;
-    case keyCode.LEFT:
+    case 'ArrowLeft':
       method = !vertical && reverse ? increase: decrease; break;
 
-    case keyCode.END: return (value, props) => props.max;
-    case keyCode.HOME: return (value, props) => props.min;
-    case keyCode.PAGE_UP: return (value, props) => value + props.step * 2;
-    case keyCode.PAGE_DOWN: return (value, props) => value - props.step * 2;
+    case 'End': return (value, props) => props.max;
+    case 'Home': return (value, props) => props.min;
+    case 'PageUp': return (value, props) => value + props.step * 2;
+    case 'PageDown': return (value, props) => value - props.step * 2;
 
     default: return undefined;
   }

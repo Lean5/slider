@@ -1,27 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
-import warning from 'warning';
 import Track from './common/Track';
 import createSlider from './common/createSlider';
 import * as utils from './utils';
 
 class Slider extends React.Component {
-  static propTypes = {
-    defaultValue: PropTypes.number,
-    value: PropTypes.number,
-    disabled: PropTypes.bool,
-    autoFocus: PropTypes.bool,
-    tabIndex: PropTypes.number,
-    reverse: PropTypes.bool,
-    min: PropTypes.number,
-    max: PropTypes.number,
-    startPoint: PropTypes.number,
-    ariaLabelForHandle: PropTypes.string,
-    ariaLabelledByForHandle: PropTypes.string,
-    ariaValueTextFormatterForHandle: PropTypes.func,
-  };
-
   constructor(props) {
     super(props);
 
@@ -34,15 +17,6 @@ class Slider extends React.Component {
       value: this.trimAlignValue(value),
       dragging: false,
     };
-
-    warning(
-      !('minimumTrackStyle' in props),
-      'minimumTrackStyle will be deprecated, please use trackStyle instead.'
-    );
-    warning(
-      !('maximumTrackStyle' in props),
-      'maximumTrackStyle will be deprecated, please use railStyle instead.'
-    );
   }
 
   componentDidUpdate(prevProps, prevState) {

@@ -1,8 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import classNames from 'classnames';
-import warning from 'warning';
 import Steps from './Steps';
 import Marks from './Marks';
 import Handle from '../Handle';
@@ -13,37 +10,6 @@ function noop() {}
 export default function createSlider(Component) {
   return class ComponentEnhancer extends Component {
     static displayName = `ComponentEnhancer(${Component.displayName})`;
-    static propTypes = {
-      ...Component.propTypes,
-      min: PropTypes.number,
-      max: PropTypes.number,
-      startPoint: PropTypes.number,
-      step: PropTypes.number,
-      marks: PropTypes.object,
-      included: PropTypes.bool,
-      className: PropTypes.string,
-      prefixCls: PropTypes.string,
-      disabled: PropTypes.bool,
-      children: PropTypes.any,
-      onBeforeChange: PropTypes.func,
-      onChange: PropTypes.func,
-      onAfterChange: PropTypes.func,
-      handle: PropTypes.func,
-      dots: PropTypes.bool,
-      vertical: PropTypes.bool,
-      style: PropTypes.object,
-      reverse: PropTypes.bool,
-      minimumTrackStyle: PropTypes.object, // just for compatibility, will be deperecate
-      maximumTrackStyle: PropTypes.object, // just for compatibility, will be deperecate
-      handleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
-      trackStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
-      railStyle: PropTypes.object,
-      dotStyle: PropTypes.object,
-      activeDotStyle: PropTypes.object,
-      autoFocus: PropTypes.bool,
-      onFocus: PropTypes.func,
-      onBlur: PropTypes.func,
-    };
 
     static defaultProps = {
       ...Component.defaultProps,
@@ -81,12 +47,6 @@ export default function createSlider(Component) {
 
       const { step, max, min } = props;
       const isPointDiffEven = isFinite(max - min) ? (max - min) % step === 0 : true; // eslint-disable-line
-      warning(
-        step && Math.floor(step) === step ? isPointDiffEven : true,
-        'Slider[max] - Slider[min] (%s) should be a multiple of Slider[step] (%s)',
-        max - min,
-        step
-      );
       this.handlesRefs = {};
     }
 
@@ -219,23 +179,21 @@ export default function createSlider(Component) {
 
     addDocumentTouchEvents() {
       // just work for Chrome iOS Safari and Android Browser
-      this.onTouchMoveListener = addEventListener(this.document, 'touchmove', this.onTouchMove);
-      this.onTouchUpListener = addEventListener(this.document, 'touchend', this.onEnd);
+      this.document.addEventListener('touchmove', this.onTouchMove, false);
+      this.document.addEventListener('touchend', this.onEnd, false);
     }
 
     addDocumentMouseEvents() {
-      this.onMouseMoveListener = addEventListener(this.document, 'mousemove', this.onMouseMove);
-      this.onMouseUpListener = addEventListener(this.document, 'mouseup', this.onEnd);
+      this.document.addEventListener('mousemove', this.onMouseMove, false);
+      this.document.addEventListener('mouseup', this.onEnd, false);
     }
 
     removeDocumentEvents() {
-      /* eslint-disable no-unused-expressions */
-      this.onTouchMoveListener && this.onTouchMoveListener.remove();
-      this.onTouchUpListener && this.onTouchUpListener.remove();
+      this.document.removeEventListener('touchmove', this.onTouchMove, false);
+      this.document.removeEventListener('touchend', this.onEnd, false);
 
-      this.onMouseMoveListener && this.onMouseMoveListener.remove();
-      this.onMouseUpListener && this.onMouseUpListener.remove();
-      /* eslint-enable no-unused-expressions */
+      this.document.removeEventListener('mousemove', this.onMouseMove, false);
+      this.document.removeEventListener('mouseup', this.onEnd, false);
     }
 
     focus() {
