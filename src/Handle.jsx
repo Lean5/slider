@@ -18,6 +18,7 @@ export default class Handle extends React.Component {
 
   setHandleRef = (node) => {
     this.handle = node;
+    this.props.domRef && this.props.domRef(node);
   };
 
   setClickFocus(focused) {
@@ -58,6 +59,7 @@ export default class Handle extends React.Component {
 
   render() {
     const {
+      domRef,
       prefixCls,
       vertical,
       reverse,

@@ -1,6 +1,9 @@
 import React from 'react';
-import Tooltip from 'rc-tooltip';
+import Tippy from '@tippy.js/react';
 import Handle from './Handle';
+
+// Wrap Handle for Tippy, by forwarding Tippy's `ref` to `domRef`, and `handleRef` to `ref`.
+const HandleWrapper = React.forwardRef(({ handleRef, ...rest }, ref) => <Handle {...rest} domRef={ref} ref={handleRef} />);
 
 export default function createSliderWithTooltip(Component) {
   return class ComponentWrapper extends React.Component {
@@ -23,7 +26,7 @@ export default function createSliderWithTooltip(Component) {
         };
       });
     }
-    handleWithTooltip = ({ value, dragging, index, disabled, ...restProps }) => {
+    handleWithTooltip = ({ value, dragging, index, disabled, ref, ...restProps }) => {
       const {
         tipFormatter,
         tipProps,
@@ -47,17 +50,17 @@ export default function createSliderWithTooltip(Component) {
       }
 
       return (
-        <Tooltip
-          {...restTooltipProps}
-          getTooltipContainer={getTooltipContainer}
-          prefixCls={prefixCls}
-          overlay={overlay}
+        <Tippy
+          a11y={false} // no keyboard accessibility
+          arrow={true}
+          delay={0}
+          duration={0}
+          content={overlay}
           placement={placement}
           visible={(!disabled && (this.state.visibles[index] || dragging)) || visible}
           key={index}
         >
-
-          <Handle
+          <HandleWrapper handleRef={ref}
             {...restProps}
             style={{
               ...handleStyleWithIndex,
@@ -66,7 +69,7 @@ export default function createSliderWithTooltip(Component) {
             onMouseEnter={() => this.handleTooltipVisibleChange(index, true)}
             onMouseLeave={() => this.handleTooltipVisibleChange(index, false)}
           />
-        </Tooltip>
+        </Tippy>
       );
     }
     render() {
