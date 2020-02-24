@@ -26,7 +26,7 @@
   ],
   "license": "MIT",
   "main": "./lib/index.js",
-  "module": "./es/index",
+  "module": "./src/index",
   "style": "./assets/index.css",
   "config": {
     "port": 8005,
@@ -75,16 +75,9 @@
     "react-dom": "^16.0.0",
     "react-test-renderer": "^16.0.0"
   },
-  "pre-commit": [
-    "lint"
-  ],
   "dependencies": {
-    "babel-runtime": "6.x",
+    "@tippy.js/react": "^2.2.3",
     "classnames": "^2.2.5",
-    "prop-types": "^15.5.4",
-    "rc-tooltip": "^4.0.0-alpha.3",
-    "rc-util": "^4.0.4",
-    "shallowequal": "^1.1.0",
-    "warning": "^4.0.3"
+    "shallowequal": "^1.1.0"
   }
 }

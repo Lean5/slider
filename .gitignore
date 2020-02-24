@@ -21,7 +21,8 @@ Thumbs.db
 .build
 node_modules
 .cache
-dist
+dist/*.*
+!dist/rc-slider.css
 assets/**/*.css
 build
 lib
